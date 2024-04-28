@@ -1,6 +1,10 @@
 # Gem Hunter
 **SAT Problem**
 
-To run: 
+## Running
+Install PySAT [here](https://pysathq.github.io/installation/) before running.
 
-`python Solver.py`
+Change the input up to your preferences. Then, run: 
+
+`python Main.py`
+
