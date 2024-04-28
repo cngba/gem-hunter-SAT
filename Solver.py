@@ -49,7 +49,6 @@ def solve_board(board):
     g.solve()
     return g.get_model()
 
-''' MAIN EXE '''
 
 
 

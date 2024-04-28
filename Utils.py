@@ -56,6 +56,7 @@ def at_least(n, neighbors):
 def get_cell_constraints(cell_num, neighbors):
     '''
     Only use for numbered cells
+    CNFs are created here.
     "Equal is the conjunction of at_most and at_least"
     '''
     if cell_num == 0:
