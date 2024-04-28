@@ -2,6 +2,22 @@ import Input, Utils
 from pysat.formula import CNF
 from pysat.solvers import Glucose3
 ''' SOLVER '''
+def generate_cnf(board, height, width, numbered_list):
+    cnf = CNF()
+
+    # Boundary Setup
+    for c in range(width + 2):
+        cnf.append([-(c + 1)])
+        cnf.append([-( (height + 1) * (width + 2) + c + 1)])
+
+    for r in range(height + 2):
+        cnf.append([-(r * (width + 2) + 1)])
+        cnf.append([-((r + 1) * (width + 2))])
+
+    for cell in numbered_list:
+        cnf.extend(solve_cell(board, cell))
+    return cnf
+
 def solve_cell(board, cell):
     r = cell[0]
     c = cell[1]
@@ -33,7 +49,6 @@ def solve_cell(board, cell):
     # print(clauses)
     return clauses
 
-
 def solve_board(board):
     '''
     Only one epoch. This is much more simple than conventional Minesweeper
@@ -42,19 +57,7 @@ def solve_board(board):
     width = len(board[0])
 
     numbered_list = Input.get_numbered_cells(board)
-    cnf = CNF()
-
-    # Boundary Setup
-    for c in range(width + 2):
-        cnf.append([-(c + 1)])
-        cnf.append([-( (height + 1) * (width + 2) + c + 1)])
-
-    for r in range(height + 2):
-        cnf.append([-(r * (width + 2) + 1)])
-        cnf.append([-((r + 1) * (width + 2))])
-
-    for cell in numbered_list:
-        cnf.extend(solve_cell(board, cell))
+    cnf = generate_cnf(board, height, width, numbered_list)
 
     # print(cnf.clauses)
     g = Glucose3()
@@ -62,6 +65,8 @@ def solve_board(board):
     g.solve()
     # print(g.get_model())
     return g.get_model()
+
+
 
 
 
