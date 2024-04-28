@@ -1,14 +1,20 @@
 from pysat.solvers import Glucose3
-
+from pysat.formula import CNF
 def solve_sat_problem():
     # Initialize the solver
     solver = Glucose3()
 
     # Add clauses (logical statements) to the solver
-    solver.add_clause([1,2])
-    solver.add_clause([1,2,3])
-    solver.add_clause([2,3])
-
+    cnf = CNF()
+    clauses = [
+        [-7, -8], [7, 8],
+        [-8, -9], [-7, -9], [-7, -8], [7, 8, 9],
+        [-8, -9], [8, 9],
+        [-12], [-13], [-14],
+        [-17], [-18], [-19]
+    ]
+    cnf.extend(clauses)
+    solver.append_formula(cnf.clauses)
     # Solve the problem
     if solver.solve():
         # If a solution is found, get the solution
