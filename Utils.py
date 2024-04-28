@@ -6,6 +6,13 @@ def coords_to_num(row, col, width):
     '''
     return (row + 1) * (width + 2) + col + 2
 
+def num_to_coords(num, width):
+    num = num - 2
+    col = num % (width + 2)
+    row = num // (width + 2)
+    row = row - 1
+    return row, col
+
 def coords_to_num_lst(neighbors, width):
     num_lst = []
     for (x, y) in neighbors:
@@ -17,6 +24,7 @@ def at_most(n, neighbors):
     """
     n is the number of bombs nearby
     neighbors is the list of neighboring cells
+    This function creates a truth table in binary form
     """
     clauses = []
     rows_count = 2 ** len(neighbors)
@@ -46,7 +54,10 @@ def at_least(n, neighbors):
     return clauses
 
 def get_cell_constraints(cell_num, neighbors):
-    "Only use for numbered cells"
+    '''
+    Only use for numbered cells
+    "Equal is the conjunction of at_most and at_least"
+    '''
     if cell_num == 0:
         return [[-neighbors[i]] for i in range(len(neighbors))]
 

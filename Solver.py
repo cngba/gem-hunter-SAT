@@ -20,7 +20,7 @@ def solve_cell(board, cell):
     clauses = Utils.get_cell_constraints(int(board[r][c]), neighbors_ids)
 
     clauses.append([-Utils.coords_to_num(r, c, width)])
-    print(clauses)
+    # print(clauses)
     return clauses
 
 
@@ -50,10 +50,6 @@ def solve_board(board):
     return g.get_model()
 
 ''' MAIN EXE '''
-board = Input.input_board("input.txt")
-print(board)
-print()
-empty_list = Input.get_empty_cells(board)
 
-print(empty_list)
-print(solve_board(board))
+
+
