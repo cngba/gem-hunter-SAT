@@ -2,13 +2,14 @@
 def coords_to_num(row, col, width):
     '''
     Example: A row with 5 elements (0,1,2,3,4);
-    cell (2,1) is converted to 2 * 5 + 1 = 11
+    cell (2,2) is converted to (2 + 1) * (5 + 2) + 2 + 2 = 25
     '''
-    return row * width + col
+    return (row + 1) * (width + 2) + col + 2
 
 def coords_to_num_lst(neighbors, width):
     num_lst = []
     for (x, y) in neighbors:
+        # print(f"Cell {x},{y}: {coords_to_num(x,y, width)}")
         num_lst.append(coords_to_num(x, y, width))
     return num_lst
 
@@ -18,7 +19,6 @@ def at_most(n, neighbors):
     neighbors is the list of neighboring cells
     """
     clauses = []
-
     rows_count = 2 ** len(neighbors)
     for row in range(rows_count):
         bin_representation = '{0:0{len}b}'.format(row, len=len(neighbors))
@@ -31,27 +31,25 @@ def at_most(n, neighbors):
             then create a clause that n
             """
             clauses.append([-neighbors[i] for i in range(len(neighbors)) if (bin_representation[i] == '1')])
-
     return clauses
 
-def at_least(n, neighbours):
+def at_least(n, neighbors):
     clauses = []
 
-    rows_count = 2 ** len(neighbours)
+    rows_count = 2 ** len(neighbors)
     for row in range(rows_count):
-        bin_representation = '{0:0{len}b}'.format(row, len=len(neighbours))
+        bin_representation = '{0:0{len}b}'.format(row, len=len(neighbors))
         bit_count = bin_representation.count("1")
-        if bit_count == (len(neighbours) - (n - 1)):
-            clauses.append([neighbours[i] for i in range(len(neighbours)) if (bin_representation[i] == '1')])
+        if bit_count == (len(neighbors) - (n - 1)):
+            clauses.append([neighbors[i] for i in range(len(neighbors)) if (bin_representation[i] == '1')])
 
     return clauses
 
-def get_cell_constraints(cell_num, neighbours):
+def get_cell_constraints(cell_num, neighbors):
     "Only use for numbered cells"
     if cell_num == 0:
-        return [[-neighbours[i]] for i in range(len(neighbours))]
+        return [[-neighbors[i]] for i in range(len(neighbors))]
 
-    most = at_most(cell_num, neighbours)
-    least = at_least(cell_num, neighbours)
+    most = at_most(cell_num, neighbors)
+    least = at_least(cell_num, neighbors)
     return most + least
-
