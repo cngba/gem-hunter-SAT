@@ -5,7 +5,7 @@ def input_board(filename):
         board = []
         
         for line in file:
-            raw_items = line.strip().split(',')
+            raw_items = line.strip().split(', ')
             
             # Convert placeholders to characters and convert other elements to integers
             cell = [item.strip() for item in raw_items]

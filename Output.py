@@ -22,5 +22,5 @@ def print_board(board):
     width = len(board[0])
     for r in range(height): # Rows   
         for c in range(width): # Columns
-            print (board[r][c], " ", sep="", end="")  
+            print(board[r][c], " ", sep="", end="")
         print()
