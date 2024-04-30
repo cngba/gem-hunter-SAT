@@ -138,4 +138,69 @@ def brute_force(board):
     matrix = generate_possible_output(board, numbered_list)
     return matrix
 
+'''DPLL (Optimal)'''
+def dpll(cnf, assignment):
+    if not cnf:  
+        return assignment  #No clauses left to check
 
+    for clause in cnf:
+        if not clause:  
+            return False  # An empty clause, indicating unsatisfiability
+        
+    # Find unit clause
+    unit_clauses = [clause[0] for clause in cnf if len(clause) == 1]
+    for unit in unit_clauses:  
+        if -unit in assignment:
+            return False  # Check if there's a conflicting assignment
+        assignment.add(unit)
+
+    if len(unit_clauses) > 0:  
+        return dpll([clause for clause in cnf if unit_clauses[0] not in clause], assignment)  # Apply unit propagation
+
+    # Find the variable that appears most frequently in the clauses
+    max_count = 0
+    max_literal = None
+    for clause in cnf:
+        for literal in clause:
+            if abs(literal) not in assignment:
+                count = sum(1 for c in cnf if literal in c)
+                if count > max_count:
+                    max_count = count
+                    max_literal = literal
+
+    if max_literal is None:
+        return assignment  # If there are no unassigned variables left, return the assignment
+
+    assignment.add(max_literal)
+    result = dpll([clause for clause in cnf if max_literal not in clause], assignment)
+    if result:
+        return result
+
+    assignment.remove(max_literal)
+    assignment.add(-max_literal)
+    result = dpll([clause for clause in cnf if -max_literal not in clause], assignment)
+    if result:
+        return result
+
+    return False  # No solution found
+
+
+def solve_cnf_dpll(cnf, num_vars):
+    assignment = set()
+    solution = dpll(cnf, assignment)
+    if solution:
+        return sorted(list(solution))  # Sort the result before returning
+    else:
+        return None
+
+
+def solve_board_dpll(board):
+    height = len(board)
+    width = len(board[0])
+
+    numbered_list = Input.get_numbered_cells(board)
+    cnf = generate_cnf(board, height, width, numbered_list)
+
+    
+    solution = solve_cnf_dpll(cnf.clauses, (height + width + 2) * (height + width + 2))
+    return solution
