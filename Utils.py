@@ -6,13 +6,6 @@ def coords_to_num(row, col, width):
     '''
     return (row + 1) * (width + 2) + col + 2
 
-def num_to_coords(num, width):
-    num = num - 2
-    col = num % (width + 2)
-    row = num // (width + 2)
-    row = row - 1
-    return row, col
-
 def coords_to_num_lst(neighbors, width):
     num_lst = []
     for (x, y) in neighbors:
