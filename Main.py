@@ -30,5 +30,5 @@ elapsed_time = end_time_2 - start_time_2
 if brute_force_result:
     Output.print_board(brute_force_result)
 else:
-    print("No matrix found.")
+    print("No Solution.")
 print("Elapsed time:", elapsed_time, "seconds")
