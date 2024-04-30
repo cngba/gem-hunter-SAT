@@ -38,22 +38,22 @@ else:
     print("False")
     
     
-# print("=====Brute-Force=====")
-# # Get Board from file input 
-# Brute_Board = Input.input_board("input.txt")
-#print()
+print("=====Brute-Force=====")
+# Get Board from file input 
+Brute_Board = Input.input_board("input.txt")
+print()
 
-# # Solve problem
-# start_time_3 = time.time()
-# brute_force_result = Solver.brute_force(Brute_Board)
-# end_time_3 = time.time()
-# elapsed_time_3 = end_time_3 - start_time_3
+# Solve problem
+start_time_3 = time.time()
+brute_force_result = Solver.brute_force(Brute_Board)
+end_time_3 = time.time()
+elapsed_time_3 = end_time_3 - start_time_3
 
-# # Print result
-# if brute_force_result:
-#     Output.print_board(brute_force_result)
-# else:
-#     print("No Solution.")
-# print("Elapsed time:", elapsed_time_3, "seconds")
+# Print result
+if brute_force_result:
+    Output.print_board(brute_force_result)
+else:
+    print("No Solution.")
+print("Elapsed time:", elapsed_time_3, "seconds")
 
 

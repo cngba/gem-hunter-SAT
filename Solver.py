@@ -2,7 +2,7 @@ import Input, Utils
 from pysat.formula import CNF
 from pysat.solvers import Glucose3
 
-''' SOLVER '''
+''' PySAT SOLVER '''
 def generate_cnf(board, height, width, numbered_list):
     cnf = CNF()
 
